@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { Group } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
 
 // Generic model selection based on guidelines
 const TEXT_MODEL = 'gemini-2.5-flash';
