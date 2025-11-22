@@ -1,16 +1,26 @@
+import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, (process as any).cwd(), '');
-  return {
-    plugins: [react()],
-    define: {
-      // Maps Vercel's VITE_API_KEY to the process.env.API_KEY used in the code
-      'process.env.API_KEY': JSON.stringify(env.VITE_API_KEY),
-      // Prevent crash if process is accessed elsewhere
-      'process.env': {}
-    },
-  };
+    // Tüm ortam değişkenlerini yükle
+    const env = loadEnv(mode, process.cwd(), '');
+    
+    return {
+      server: {
+        port: 3000,
+        host: '0.0.0.0',
+      },
+      plugins: [react()],
+      define: {
+        // Hem env dosyasından hem de process.env'den (Vercel) kontrol et
+        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY),
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY)
+      },
+      resolve: {
+        alias: {
+          '@': path.resolve(__dirname, '.'),
+        }
+      }
+    };
 });
