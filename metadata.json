@@ -1,0 +1,5 @@
+{
+  "name": "Tournament Manager",
+  "description": "A football tournament management system powered by Gemini 2.5 Flash. Features team assignment, group drawing, match simulation, and AI-powered team logo editing.",
+  "requestFramePermissions": []
+}
